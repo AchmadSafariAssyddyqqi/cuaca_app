@@ -1,0 +1,16 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class WeatherService {
+  final String apiKey = 'f4d3b8cd859750648938cf4fe247965e'; // Ganti dengan API key kamu
+  final String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+  Future<Map<String, dynamic>> fetchWeather(String city) async {
+    final response = await http.get(Uri.parse('$baseUrl?q=$city&appid=$apiKey&units=metric'));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Gagal mengambil data cuaca');
+    }
+  }
+}
